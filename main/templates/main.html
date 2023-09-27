@@ -8,10 +8,10 @@
 
     <h5>Class:</h5>
     <p>{{class}}</p>
-<table>
+<table border="1">
     <tr>
         <th>Name</th>
-        <th>amount</th>
+        <th>Amount</th>
         <th>Description</th>
         <th>Date Added</th>
     </tr>
@@ -27,12 +27,27 @@
         </tr>
     {% endfor %}
 </table>
+<table border="3">
+    <tr>
+        <th>Nama</th>
+        <th>NPM</th>    
+    </tr>
+    <tr>
+        <td>Rifqi Rahmatuloh</td>
+        <td>2206820365</td>
+    </tr>
+</table>
 
 <br />
-
 <a href="{% url 'main:add_money' %}">
     <button>
         Add Money
     </button>
+</a>
+<a href="{% url 'main:logout' %}">
+    <button>
+        Logout
+    </button>
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
 </a>
 {% endblock content %}
