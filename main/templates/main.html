@@ -8,6 +8,13 @@
 
     <h5>Class:</h5>
     <p>{{class}}</p>
+    <table>
+        <tr>
+            <p>
+                Saldo : {{ total_amount }}
+            </p>       
+        </tr>
+    </table>
 <table border="1">
     <tr>
         <th>Name</th>
@@ -24,6 +31,16 @@
             <td>{{product.amount}}</td>
             <td>{{product.description}}</td>
             <td>{{product.date_added}}</td>
+            <td>
+                <a href="/delete/{{product.id}}"><button>Hapus Product Ini</button></a>
+            </td>
+            <td>
+                <a href="{% url 'main:edit_item' product.pk %}">
+                    <button>
+                        Edit
+                    </button>
+                </a>
+            </td>
         </tr>
     {% endfor %}
 </table>

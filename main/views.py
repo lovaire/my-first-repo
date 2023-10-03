@@ -39,6 +39,11 @@ def add_money(request):
     context = {'form': form}
     return render(request, "add_money.html", context)
 
+def delete(request, id):
+    data = Product.objects.get(pk=id)
+    data.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
 def show_xml(request):
     data = Product.objects.all()
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
@@ -86,3 +91,22 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_item(request, id):
+    # Get product berdasarkan ID
+    product = Product.objects.get(pk = id)
+
+    # Set product sebagai instance dari form
+    form = ProductForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_item.html", context)
+
+def calculate_total():
+    total_amount = Product.objects.all(Product.Sum('amount'))['amount__sum']
+    return total_amount if total_amount is not None else 0
