@@ -12,3 +12,15 @@ c. Cookies dapat mengandung informasi pribadi atau sensitif yang dapat membahaya
 Mengimplementasikan fungsi registrasi login dan logout dengan cara membuat fungsi register, login dan logout pada views.py pada direktori main.
 
 Menampilkan detail informasi pengguna itu dengan mengunakan request.COOKIE.
+
+
+
+TUGAS 5
+
+1. a. Element Selector, berguna untuk mengubah properti dengan tag HTML yang sama. element selector ini cocok digunakan saat kita hanya ingin mengubah beberapa komponen dengan tag yang sama.
+
+b. id selector, berguna untuk mengubah properti dengan menandakan id untuk tag yang ingin diubah. cocok digunakan saat ingin mengubah bagian tertentu saja pada dokumen.
+
+c. class selector, berguna unengubah properti pada class tertentu saja.
+
+2. tag table untuk membuat table, tag header untuk membuat header, tag footer untuk membuat footer, tag head untuk membuat kepala dari program, body untuk membuat badan dari program.
