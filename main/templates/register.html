@@ -6,29 +6,79 @@
 
 {% block content %}  
 
-<div class = "login">
-    
-    <h1>Register</h1>  
+<div class="login-container">
+    <h1 class="login-title">Register</h1>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Daftar"/></td>  
-                </tr>  
-            </table>  
-        </form>
+    <form method="POST" class="login-form">  
+        {% csrf_token %}  
+        <div class="form-group">  
+            {{ form.as_p }}  
+        </div>  
+        <div class="form-group">  
+            <input type="submit" name="submit" value="Register" class="btn btn-primary btn-block"/>  
+        </div>  
+    </form>
 
     {% if messages %}  
-        <ul>   
+        <ul class="error-list">   
             {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
+                <li class="error-message">{{ message }}</li>  
+            {% endfor %}  
         </ul>   
     {% endif %}
+</div>
 
-</div>  
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .login-title {
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .login-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .error-list {
+        list-style: none;
+        padding: 0;
+        color: #ff0000;
+    }
+
+    .error-message {
+        margin-bottom: 5px;
+    }
+</style>
 
 {% endblock content %}

@@ -1,75 +1,262 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block content %}
-    <h1>Moma Money Manager</h1>
-    h1 {
-        color: #fca205;
-        font-family: "Monospace";
-        font-style: italic;
-      }
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">ByKyye.corp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Rincian</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">More Features</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Click Here!
+                    </a>
+                    <ul class="dropdown-menu" style="transition: fade">
+                        <li><a class="dropdown-item" href="#">About Me!</a></li>
+                        <li><a class="dropdown-item" href="#">Service</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <a href="{% url 'main:logout' %}">
+                <button class="btn btn-outline-light" type="submit">Logout</button>
+            </a>
+        </div>
+    </div>
+</nav>
 
-    <h5>Name:</h5>
-    <p>{{name}}</p>
+<div style="text-align: center; background-color: #f2f2f2; padding: 20px;">
+    <h1 style="font-family: 'Arial', sans-serif; font-size: 36px; color: #333;">MoMa Money Manager</h1>
 
-    <h5>Class:</h5>
-    <p>{{class}}</p>
-    <table>
-        <tr>
-            <p>
-                Saldo : {{ total_amount }}
-            </p>       
-        </tr>
-    </table>
-<table border="1">
-    <tr>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Description</th>
-        <th>Date Added</th>
-    </tr>
+    <div style="margin-top: 20px;">
+        <h5 style="font-family: 'Arial', sans-serif; font-size: 18px; color: #666;">Name: {{ name }}</h5>
+    </div>
 
-    {% comment %} Berikut cara memperlihatkan data produk di bawah baris ini {% endcomment %}
+    <div style="margin-top: 20px;">
+        <h5 style="font-family: 'Arial', sans-serif; font-size: 18px; color: #666;">Class: {{ class }}</h5>
+    </div>
 
-    {% for product in products %}
-        <tr>
-            <td>{{product.name}}</td>
-            <td>{{product.amount}}</td>
-            <td>{{product.description}}</td>
-            <td>{{product.date_added}}</td>
-            <td>
-                <a href="/delete/{{product.id}}"><button>Hapus Product Ini</button></a>
-            </td>
-            <td>
-                <a href="{% url 'main:edit_item' product.pk %}">
-                    <button>
-                        Edit
-                    </button>
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-</table>
-<table border="3">
-    <tr>
-        <th>Nama</th>
-        <th>NPM</th>    
-    </tr>
-    <tr>
-        <td>Rifqi Rahmatuloh</td>
-        <td>2206820365</td>
-    </tr>
-</table>
+    <div style="margin-top: 20px;">
+        <h5 style="font-family: 'Arial', sans-serif; font-size: 18px; color: #666;">Total Item: {{ total }}</h5>
+    </div>
+</div>
+
+<table id="product_table"></table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Money</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="form" onsubmit="return false;">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="col-form-label">Amount:</label>
+                        <input type="number" class="form-control" id="amount" name="amount"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="col-form-label">Description:</label>
+                        <textarea class="form-control" id="description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Money!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Money</button>
 
 <br />
-<a href="{% url 'main:add_money' %}">
-    <button>
-        Add Money
-    </button>
-</a>
-<a href="{% url 'main:logout' %}">
-    <button>
-        Logout
-    </button>
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-</a>
+
+<h5 style="font-family: 'Arial', sans-serif; font-size: 18px; color: #666;">Sesi terakhir login: {{ last_login }}</h5>
+
+<script>
+    async function getProducts() {
+        return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+    }
+
+    async function refreshProducts() {
+        document.getElementById("product_table").innerHTML = ""
+        const products = await getProducts()
+        let htmlString = `<tr>
+            <th style="text-align: center;">Name</th>
+            <th style="text-align: center;">Amount</th>
+            <th style="text-align: center;">Description</th>
+            <th style="text-align: center;">Date Added</th>
+            <th style="text-align: center;">Features</th>
+        </tr>`
+        products.forEach((item) => {
+            htmlString += `\n<tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.amount}</td>
+            <td>${item.fields.description}</td>
+            <td>${item.fields.date_added}</td>
+            <td class="text-center">
+                <div class="btn-group" role="group">
+                    <a href="edit-item/${item.pk}" class="btn btn-primary">
+                        Edit
+                    </a>
+                    <a href="delete/${item.pk}" class="btn btn-danger">
+                        Delete
+                    </a>
+                </div>
+            </td>
+        </tr>`
+        })
+
+        document.getElementById("product_table").innerHTML = htmlString
+    }
+
+    refreshProducts()
+
+    function addProduct() {
+        fetch("{% url 'main:add_money_ajax' %}", {
+            method: "POST",
+            body: new FormData(document.querySelector('#form'))
+        }).then(refreshProducts)
+
+        document.getElementById("form").reset()
+        return false
+    }
+
+    document.getElementById("button_add").onclick = addProduct
+</script>
+
+<style>
+    .navbar {
+        background-color: #007bff;
+    }
+
+    .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+    }
+
+    .navbar-toggler-icon {
+        background-color: #fff;
+    }
+
+    .nav-link {
+        color: #fff !important;
+        font-weight: bold;
+    }
+
+    .btn-outline-success {
+        background-color: red;
+        color: white;
+        border: none;
+    }
+
+    .btn-outline-success:hover {
+        background-color: #dc3545;
+    }
+
+    .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .modal-title {
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #007bff !important;
+        color: #fff !important;
+        font-weight: bold;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3 !important;
+    }
+
+    .btn-danger {
+        background-color: red !important;
+        color: #fff !important;
+        font-weight: bold;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #dc3545 !important;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d !important;
+        color: #fff !important;
+        font-weight: bold;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62 !important;
+    }
+
+    .btn-close {
+        color: #333;
+    }
+
+    h1,
+    h5 {
+        font-family: 'Arial', sans-serif;
+    }
+
+    h1 {
+        font-size: 36px;
+        color: #333;
+    }
+
+    h5 {
+        font-size: 18px;
+        color: #666;
+    }
+
+    #product_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    #product_table th,
+    #product_table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #product_table th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+</style>
+
+</body>
+</html>
 {% endblock content %}

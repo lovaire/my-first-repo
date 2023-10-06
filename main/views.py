@@ -12,18 +12,23 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 import datetime
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
+
 
 @login_required(login_url='/login')
 def show_main(request):
     products = Product.objects.filter(user=request.user)
+    total = Product.objects.all().count()
+
 
     context = {
         'name': request.user.username,
         'class': 'PBP C', # Kelas PBP kamu
         'products': products,
         'last_login': request.COOKIES['last_login'],
+        'total' : total,
     }
     return render(request, "main.html", context)
     
@@ -110,3 +115,27 @@ def edit_item(request, id):
 def calculate_total():
     total_amount = Product.objects.all(Product.Sum('amount'))['amount__sum']
     return total_amount if total_amount is not None else 0
+
+def get_product_json(request):
+    product_item = Product.objects.all()
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_money_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Product(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+    return HttpResponseNotFound()
+
+@csrf_exempt
+def delete_by_ajax(request, id):
+    data = Product.objects.get(pk=id)
+    data.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
