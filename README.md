@@ -24,3 +24,19 @@ b. id selector, berguna untuk mengubah properti dengan menandakan id untuk tag y
 c. class selector, berguna unengubah properti pada class tertentu saja.
 
 2. tag table untuk membuat table, tag header untuk membuat header, tag footer untuk membuat footer, tag head untuk membuat kepala dari program, body untuk membuat badan dari program.
+
+
+TUGAS 6
+
+1. Perbedaan antara asynchronous programming dengan synchronous programming adalah bahwa asynchronous programming memungkinkan kode untuk menjalankan tugas secara paralel, sedangkan synchronous programming membutuhkan kode untuk menjalankan tugas secara berurutan.
+
+2. event-driven programming adalah pemrograman yang menentukan alur program berdasarkan peristiwa yang terjadi, seperti interaksi pengguna, keluaran sensor, atau pesan dari program atau thread lain. 
+
+3. Penerapan asynchronous programming pada AJAX adalah dengan menggunakan objek XMLHttpRequest atau Fetch API yang dapat mengirim dan menerima data dari server secara asinkron tanpa mengganggu tampilan dan perilaku halaman web. 
+
+4. Perbandingan antara Fetch API dan jQuery untuk AJAX adalah sebagai berikut: 
+    * Fetch API adalah fitur bawaan browser yang mengikuti spesifikasi standar dan tidak memerlukan library tambahan, sedangkan jQuery adalah library JavaScript yang menyediakan fungsi AJAX sebagai salah satu fiturnya.
+
+    * Fetch API mengembalikan Promise yang tidak akan ditolak pada status kesalahan HTTP bahkan jika respons adalah HTTP 404 atau 500.
+
+Menurut saya, Fetch API lebih baik digunakan daripada jQuery untuk AJAX karena lebih modern, ringan, dan sesuai dengan standar web.
