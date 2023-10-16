@@ -40,3 +40,5 @@ TUGAS 6
     * Fetch API mengembalikan Promise yang tidak akan ditolak pada status kesalahan HTTP bahkan jika respons adalah HTTP 404 atau 500.
 
 Menurut saya, Fetch API lebih baik digunakan daripada jQuery untuk AJAX karena lebih modern, ringan, dan sesuai dengan standar web.
+
+link : rifqi-rahmatuloh-tugas.pbp.cs.ui.ac.id
